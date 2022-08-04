@@ -16,6 +16,7 @@ let opc = document.getElementById('opc')
 boton1.onclick = () => {
     console.log(opc.value)
     valorOpc= opc.value
+    listaProductos = JSON.parse(localStorage.getItem('listaproduct'))
     if (valorOpc == 1){
         let tituloTipo = document.getElementById('tituloTipo')
         let formProducto = document.getElementById('formProducto')
@@ -29,6 +30,7 @@ boton1.onclick = () => {
         boton2.onclick = () =>{
             listaProductos.push( new Producto(idProducto.value,tipo, precioProducto.value, cantidadProducto.value))
             console.log(idProducto.value +' ' + tipo +' '+precioProducto.value+' '+cantidadProducto.value)
+            localStorage.setItem('listaproduct', JSON.stringify(listaProductos))
         }
     }else if(valorOpc == 2){
         let tituloTipo = document.getElementById('tituloTipo')
@@ -164,3 +166,4 @@ function Comparacion(a, b){
 
     
 }
+// LOCAL STORAGE
