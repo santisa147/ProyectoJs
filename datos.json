@@ -1,0 +1,14 @@
+[
+    {"id": 1,"tipo":"Panaderia","precio":"10","cantidad":"2"},
+    {"id": 11,"tipo":"Panaderia","precio":"32","cantidad":"21"},
+    {"id": 3,"tipo":"Almacen","precio":"12","cantidad":"4"},
+    {"id": 4,"tipo":"Almacen","precio":"1","cantidad":"5"},
+    {"id": 5,"tipo":"Almacen","precio":"100","cantidad":"32"},
+    {"id": 6,"tipo":"Almacen","precio":"23","cantidad":"52"},
+    {"id": 7,"tipo":"Panaderia","precio":"78","cantidad":"9"},
+    {"id": 8,"tipo":"Panaderia","precio":"13","cantidad":"8"},
+    {"id": 9,"tipo":"Verduleria","precio":"29","cantidad":"7"},
+    {"id": 10,"tipo":"Verduleria","precio":"17","cantidad":"8"},
+    {"id": 11,"tipo":"Verduleria","precio":"16","cantidad":"4"},
+    {"id": 12,"tipo":"Verduleria","precio":"15","cantidad":"6"}
+]

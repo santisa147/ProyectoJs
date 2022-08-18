@@ -7,16 +7,30 @@ class Producto{
     }
 }
 
+async function myPromise(){ 
+    return await new Promise((resolve, reject)=>{
+
+        fetch("./datos.json").then(response => {
+            resolve(response.json());
+        }).catch(error =>{
+            reject(error);
+        }); 
+    })
+}    
+
+
 // Menu de opciones
 // let opc = 5
+
 let valorOpc
 let listaProductos = []
 let boton1 = document.getElementById('boton1')
 let opc = document.getElementById('opc')
+
 boton1.onclick = () => {
+
     console.log(opc.value)
     valorOpc= opc.value
-    listaProductos = JSON.parse(localStorage.getItem('listaproduct'))
     if (valorOpc == 1){
         let tituloTipo = document.getElementById('tituloTipo')
         let formProducto = document.getElementById('formProducto')
@@ -34,7 +48,7 @@ boton1.onclick = () => {
               })
             listaProductos.push( new Producto(idProducto.value,tipo, precioProducto.value, cantidadProducto.value))
             console.log(idProducto.value +' ' + tipo +' '+precioProducto.value+' '+cantidadProducto.value)
-            localStorage.setItem('listaproduct', JSON.stringify(listaProductos))
+            
         }
     }else if(valorOpc == 2){
         let tituloTipo = document.getElementById('tituloTipo')
@@ -49,12 +63,18 @@ boton1.onclick = () => {
         }
         
     }else if(valorOpc == 3){
+        var lista=document.getElementById("formProducto"); 
         recorrer(listaProductos, console.log)       
         listaProductos.sort(Comparacion)
         let tituloTipo = document.getElementById('tituloTipo')
         tituloTipo.innerHTML = 'Mostrar Lista de Productos Ordenada Por Id' 
         document.getElementById('formProducto').innerHTML = ''
-        agregarElementos();
+        myPromise().then(result => result.forEach(data => {
+            var linew= document.createElement("li");    
+            var contenido = document.createTextNode(data.id + ' ' + data.tipo + ' ' + data.precio + ' ' + data.cantidad);
+            lista.appendChild(linew);
+            linew.appendChild(contenido);
+    }))
     }
         
 }
@@ -69,88 +89,11 @@ function agregarElementos(){
     })
 }
 
-    
 function recorrer(array, funcion){
     for (const elemento of array){
         funcion[elemento]
     }
 }
-
-
-
-// while (opc != 0){
-   
-//     if (opc == 1){
-//         alert('Agregar un Producto')
-//         let id = prompt('Id Del Producto')
-//         let tipo = prompt('Seleccione el Tipo de Producto\n 1-Panaderia\n 2-Almacen\n 3-Verduleria\n')
-//         tipo = parseInt(tipo)
-//         switch (tipo){
-//             case 1: 
-//                 tipo = 'Panaderia'
-//                 break
-//             case 2:
-//                 tipo = 'Almacen'
-//                 break
-//             case 3:
-//                 tipo = 'Verduleria'
-//                 break
-//         }
-//         let precio = prompt('Cargue el Precio del producto')
-//         let cantidad = prompt('Cargue la cantidad del producto')
-//         listaProductos.push( new Producto(id,tipo, precio, cantidad))
-//     }else if (opc == 2){
-//         alert('Modificar un producto')
-//         id = prompt('Id del producto a modificar')
-//         a = buscar(id)
-//         console.log(listaProductos[a])
-//         let mod = prompt('Que desea modificar?\n 1-Tipo\n 2-Precio\n 3-cantidad')
-//         mod = parseInt(mod)
-//         switch(mod){
-//             case 1:
-//                 tipo = prompt('Nuevo Tipo de Producto\n 1-Panaderia\n 2-Almacen\n 3-Verduleria\n')
-//                 tipo = parseInt(tipo)    
-//                 break
-//             case 2:
-//                 listaProductos[a].precio = prompt('Nuevo Precio:')
-//                 break
-//             case 3:
-//                 listaProductos[a].cantidad = prompt('Nueva Cantidad: ')
-//                 break   
-//         }
-//         switch (tipo){
-//             case 1: 
-//                 listaProductos[a].tipo = 'Panaderia'
-//                 break
-//             case 2:
-//                 listaProductos[a].tipo = 'Almacen'
-//                 break
-//             case 3:
-//                 listaProductos[a].tipo  = 'Verduleria'
-//                 break
-//         }
-
-//     }else if(opc == 3){
-//         listaProductos.sort(Comparacion)
-//         for (i = 0; i<= listaProductos.length;i++){
-//             console.log(listaProductos[i])
-//         }
-//         // let n = listaProductos.length
-
-//         // for (let i=0; i<= n -1;i++){
-//         //     for(let j=i +1;j <= n; j++){
-//         //         if (listaProductos[i].Id > listaProductos[j].Id){
-//         //             listaProductos[i] , listaProductos[j]= listaProductos[j],listaProductos[i]
-//         //         }
-//         //     }
-//         // }
-
-//         // for (i = 0; i <= listaProductos.length; i++){
-//         //     console.log(listaProductos[i])
-//         // }
-//     }
-    
-// }
 function buscar(id){
     for (i = 0; i <= listaProductos.length; i++){
         if(listaProductos[i].Id == id){
@@ -170,4 +113,3 @@ function Comparacion(a, b){
 
     
 }
-// LOCAL STORAGE
