@@ -26,6 +26,7 @@ let valorOpc
 let listaProductos = []
 let boton1 = document.getElementById('boton1')
 let opc = document.getElementById('opc')
+let tipoTxt = ''
 
 boton1.onclick = () => {
 
@@ -38,16 +39,20 @@ boton1.onclick = () => {
         formProducto.innerHTML = '<h3>Id del producto:</h3><input type="text" id="idProducto"><h3>Precio:</h3><input type="text" id="precio"><h3>Cantidad:</h3><input type="text" id="cantidad"> \n<select name="tipo" id="tipo"><option>Panaderia</option><option>Almacen</option><option>Verduleria</option></select><input type="submit" id="boton2" value="submit">'
         let idProducto = document.getElementById('idProducto')
         let boton2 = document.getElementById('boton2')
-        let tipo = document.getElementById('tipo').option
+        let tipo = document.getElementById('tipo');
         let precioProducto = document.getElementById('precio')
         let cantidadProducto = document.getElementById('cantidad')        
         boton2.onclick = () =>{
+            
             Swal.fire({
                 icon: 'success',
                 text: 'Se agrego Correctamente su Producto'
               })
-            listaProductos.push( new Producto(idProducto.value,tipo, precioProducto.value, cantidadProducto.value))
-            console.log(idProducto.value +' ' + tipo +' '+precioProducto.value+' '+cantidadProducto.value)
+              
+            tipo.onchange = () =>{tipoTxt = tipo.options[tipo.selectedIndex].text }
+            if(tipo.selectedIndex == 0){tipoTxt = 'Panaderia'}
+            listaProductos.push( new Producto(idProducto.value,tipoTxt, precioProducto.value, cantidadProducto.value))
+            console.log(idProducto.value +' ' + tipoTxt +' '+precioProducto.value+' '+cantidadProducto.value)
             
         }
     }else if(valorOpc == 2){
