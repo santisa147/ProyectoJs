@@ -38,16 +38,15 @@ boton1.onclick = () => {
         let formProducto = document.getElementById('formProducto')
         tituloTipo.innerHTML = 'Agregar un Producto';
         formProducto.innerHTML = '<h3>Id del producto:</h3><input type="text" id="idProducto"><h3>Precio:</h3><input type="text" id="precio"><h3>Cantidad:</h3><input type="text" id="cantidad"> \n<select name="tipo" id="tipo"><option>Panaderia</option><option>Verduleria</option><option>Carniceria</option></select><input type="submit" id="boton2" value="submit">'
-        
         let boton2 = document.getElementById('boton2')
-               
+        let tipo = document.getElementById('tipo');    
+        let precioProducto = document.getElementById('precio')
+        let cantidadProducto = document.getElementById('cantidad') 
+        tipo.onchange = () =>{tipoTxt = tipo.options[tipo.selectedIndex].text }
+        if(tipo.selectedIndex == 0){tipoTxt = 'Panaderia'}          
         boton2.onclick = () =>{
             let idProducto = document.getElementById('idProducto').value
-            idProducto = parseInt(idProducto)
-            let tipo = document.getElementById('tipo');
-            let precioProducto = document.getElementById('precio')
-            let cantidadProducto = document.getElementById('cantidad') 
-            
+            idProducto = parseInt(idProducto)        
             localStorage.clear('listaP')
             buscar(idProducto)
             if (encontrado == true){
@@ -55,9 +54,7 @@ boton1.onclick = () => {
                     icon:'error',
                     text:'El id del producto ya existe'
                 })
-            }else{
-                if(tipo.selectedIndex == 0){tipoTxt = 'Panaderia'}
-                tipo.onchange = () =>{tipoTxt = tipo.options[tipo.selectedIndex].text }
+            }else{              
                 if(listaProductos[0] == null){
                     listaProductos[0]= new Producto(idProducto,tipoTxt, precioProducto.value, cantidadProducto.value)
                 }else{                                
@@ -70,39 +67,25 @@ boton1.onclick = () => {
                 })
             }
             encontrado = false
-            localStorage.setItem('listaP',JSON.stringify(listaProductos))
-            
-
-            
-              
-            
-            
+            localStorage.setItem('listaP',JSON.stringify(listaProductos))            
         }
     }else if(valorOpc == 2){
-        let tituloTipo = document.getElementById('tituloTipo')
-        tituloTipo.innerHTML = 'Modificar Valores De un producto' 
-        let formProducto = document.getElementById('formProducto') 
-        formProducto.innerHTML ='<h3>Buscar mediante Id de producto</h3><input type="text" id="buscarId"><input type="button" id="btnBuscar">'
-        let btnBuscar = document.getElementById('btnBuscar')
-        btnBuscar.onclick = () => {
-            let buscarId = document.getElementById('buscarId')
-            console.log(listaProductos[buscar(buscarId.value)])
-            
-        }
+        var lista=document.getElementById("formProducto");    
+        myPromise().then(result => result.forEach(data => {
+                var nuevoli= document.createElement("li");    
+                var cont = document.createTextNode(data.tipo + ' ' + data.precio );
+                lista.appendChild(nuevoli);
+                nuevoli.appendChild(cont);
+        }))
         
-    }else if(valorOpc == 3){
-        var lista=document.getElementById("formProducto"); 
+    }else if(valorOpc == 3){ 
         recorrer(listaProductos, console.log)       
         listaProductos.sort(Comparacion)
         let tituloTipo = document.getElementById('tituloTipo')
         tituloTipo.innerHTML = 'Mostrar Lista de Productos Ordenada Por Id' 
         document.getElementById('formProducto').innerHTML = ''
-        myPromise().then(result => result.forEach(data => {
-            var linew= document.createElement("li");    
-            var contenido = document.createTextNode(data.id + ' ' + data.tipo + ' ' + data.precio + ' ' + data.cantidad);
-            lista.appendChild(linew);
-            linew.appendChild(contenido);
-    }))
+        agregarElementos()
+   
     }
         
 }
