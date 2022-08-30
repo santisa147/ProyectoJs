@@ -34,10 +34,12 @@ boton1.onclick = () => {
     console.log(opc.value)
     valorOpc= opc.value
     if (valorOpc == 1){
-        let tituloTipo = document.getElementById('tituloTipo')
+        let agregarProducto = document.getElementById('agregarProducto')
+        agregarProducto.innerHTML = '<section id="agregarProducto" class="agregarProd"> <h2 id="titulotipo"></h2><section><div id="formProducto"></div></div></section>'
+        let tituloTipo = document.getElementById('titulotipo')
         let formProducto = document.getElementById('formProducto')
         tituloTipo.innerHTML = 'Agregar un Producto';
-        formProducto.innerHTML = '<h3>Id del producto:</h3><input type="text" id="idProducto"><h3>Precio:</h3><input type="text" id="precio"><h3>Cantidad:</h3><input type="text" id="cantidad"> \n<select name="tipo" id="tipo"><option>Panaderia</option><option>Verduleria</option><option>Carniceria</option></select><input type="submit" id="boton2" value="submit">'
+        formProducto.innerHTML = '<div class="inputForm"><h3>Id del producto:</h3><input type="text" id="idProducto"><h3>Precio:</h3><input type="text" id="precio"><h3>Cantidad:</h3><input type="text" id="cantidad"></div><div class="content-select"><select name="tipo" id="tipo"><option>Panaderia</option><option>Verduleria</option><option>Carniceria</option></select><i></i></div><input type="submit" id="boton2" class="button" value="submit">'
         let boton2 = document.getElementById('boton2')
         let tipo = document.getElementById('tipo');    
         let precioProducto = document.getElementById('precio')
@@ -70,27 +72,34 @@ boton1.onclick = () => {
             localStorage.setItem('listaP',JSON.stringify(listaProductos))            
         }
     }else if(valorOpc == 2){
-        var lista=document.getElementById("formProducto");    
+        var form=document.getElementById("agregarProducto");
+        form.innerHTML= '<section id="agregarProducto" class="listprecio"> <h2 id="titulotipo"></h2><section><form id="formProduct"></form>'    
+        tituloTipo = document.getElementById('titulotipo')
+        tituloTipo.innerHTML = "Lista de Precios"
+        var lista = document.getElementById('formProduct')
         myPromise().then(result => result.forEach(data => {
                 var nuevoli= document.createElement("li");    
                 var cont = document.createTextNode(data.tipo + ' ' + data.precio );
                 lista.appendChild(nuevoli);
                 nuevoli.appendChild(cont);
         }))
+        document.getElementById('formProducto').innerHTML = ''
         
     }else if(valorOpc == 3){ 
+        var form=document.getElementById("agregarProducto");
+        form.innerHTML= '<section id="agregarProducto" class="listprecio"> <h2 id="titulotipo"></h2><section><form id="formProduct"></form>'
         recorrer(listaProductos, console.log)       
         listaProductos.sort(Comparacion)
-        let tituloTipo = document.getElementById('tituloTipo')
+        let tituloTipo = document.getElementById('titulotipo')
         tituloTipo.innerHTML = 'Mostrar Lista de Productos Ordenada Por Id' 
-        document.getElementById('formProducto').innerHTML = ''
+        document.getElementById('formProduct').innerHTML = ''
         agregarElementos()
    
     }
         
 }
 function agregarElementos(){ 
-    var lista=document.getElementById("formProducto"); 
+    var lista=document.getElementById("formProduct"); 
     listaProductos.forEach(function(data){
         var linew= document.createElement("li");    
         var contenido = document.createTextNode(data.Id + ' ' + data.tipo + ' ' + data.precio + ' ' + data.cantidad);
